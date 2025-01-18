@@ -1,3 +1,5 @@
 # Ignore credential files
 scrapper*/credentials.json
 scrapper*/*.json
+scrapper*/*-*.json
+scrapper*/*-*-*.json
