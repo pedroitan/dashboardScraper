@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Scraper Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .scraper {
+      margin: 20px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      max-width: 400px;
+    }
+    .status {
+      margin-top: 10px;
+      padding: 10px;
+      background: #f5f5f5;
+      border-radius: 3px;
+    }
+    button {
+      padding: 10px 20px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Scraper Dashboard</h1>
+
+  <div class="scraper">
+    <h2>El Cabong Scraper</h2>
+    <button id="elcabong-button" onclick="runElCabong()">Run Scraper</button>
+    <div class="status">
+      <p>Last Run: <span id="elcabong-last-run">Never</span></p>
+      <p>Events Extracted: <span id="elcabong-event-count">0</span></p>
+    </div>
+  </div>
+
+  <div class="scraper">
+    <h2>Sympla Scraper</h2>
+    <button id="sympla-button" onclick="runSympla()">Run Scraper</button>
+    <div class="status">
+      <p>Last Run: <span id="sympla-last-run">Never</span></p>
+      <p>Events Extracted: <span id="sympla-event-count">0</span></p>
+    </div>
+  </div>
+
+  <script>
+    async function runElCabong() {
+      const button = document.querySelector('#elcabong-button');
+      button.disabled = true;
+      button.textContent = 'Running...';
+      
+      try {
+        const response = await fetch('/run-elcabong');
+        const data = await response.json();
+        updateStatus('elcabong', data);
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Run Scraper';
+      }
+    }
+
+    async function runSympla() {
+      const button = document.querySelector('#sympla-button');
+      button.disabled = true;
+      button.textContent = 'Running...';
+      
+      try {
+        const response = await fetch('/run-sympla');
+        const data = await response.json();
+        updateStatus('sympla', data);
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Run Scraper';
+      }
+    }
+
+    function updateStatus(scraper, data) {
+      document.getElementById(`${scraper}-last-run`).textContent = new Date().toLocaleString();
+      document.getElementById(`${scraper}-event-count`).textContent = data.eventCount;
+    }
+  </script>
+</body>
+</html>
