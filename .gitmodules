@@ -1,0 +1,3 @@
+[submodule "scrapper-elcabong"]
+    path = scrapper-elcabong
+    url = https://github.com/pedroitan/dashboardScraper
