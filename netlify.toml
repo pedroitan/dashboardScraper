@@ -1,0 +1,8 @@
+[build]
+  command = "echo 'Building site...'"
+  publish = "."
+
+[[redirects]]
+  from = "/*"
+  to = "/dashboard.html"
+  status = 200
